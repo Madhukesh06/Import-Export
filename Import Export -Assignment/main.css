@@ -1,0 +1,47 @@
+body{
+    background-color: aliceblue;
+}
+
+#navbar{
+    display: flex;
+    width: 90rem;
+    margin: auto;
+    justify-content: space-between;
+    align-items: center;
+    background-color: teal;
+    padding: 0.8rem;
+    border-radius: 0.6rem;
+    height: 3.5rem;
+    
+}
+a{
+    font-style: none;
+    text-decoration: none;
+    color: white;
+}
+
+#input1{
+    width: 20rem;
+    
+    padding: 0.4rem;
+    font-size: 1.2rem;
+}
+
+#searchbox{
+    width: 25rem;
+    margin: auto;
+    display: flex;
+}
+#btn{
+    padding: 0.4rem;
+    font-size: 1.2rem;
+    cursor: pointer;
+}
+
+#cont{
+    width: 20rem;
+    height: 10rem;
+    /* border: 0.2rem solid red; */
+    border-top: none;
+    overflow: scroll;
+}

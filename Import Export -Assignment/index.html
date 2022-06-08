@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Food app</title>
+    <link rel="stylesheet" href="/Import Export -Assignment/main.css" />
+  </head>
+  <body>
+    <div id="navbar"></div>
+    <center><h1>Search Food Items</h1></center>
+
+    <!-- <div id="searchbox"> -->
+    <center>
+      <input type="text" placeholder="Search receipe by Name" id="input1" />
+      <div id="cont"></div>
+    </center>
+
+    <div id="show"></div>
+    <!-- <button id="btn">Search</button> -->
+    <!-- </div> -->
+  </body>
+</html>
+<script type="module">
+  // Navbar part --> Start
+  import { navbar } from "/Import Export -Assignment/library.js";
+  document.getElementById("navbar").innerHTML = navbar();
+  // Navbar part --> End
+
+  let timer;
+
+  document.getElementById("input1").addEventListener("input", () => {
+    debounceFunction(main, 1000);
+  });
+
+  let debounceFunction = (main, delay) => {
+    if (timer) clearTimeout(timer);
+    timer = setTimeout(() => {
+      main();
+    }, delay);
+  };
+
+  let main = async () => {
+    let query = document.getElementById("input1").value;
+    let response = searchReceipes(query);
+    let data2 = await response;
+    appendRecepie(data2);
+  };
+
+  let searchReceipes = async (search) => {
+    let url = `https://www.themealdb.com/api/json/v1/1/search.php?s=${search}`;
+    let res = await fetch(url);
+    let data1 = await res.json();
+    return data1.meals;
+  };
+
+  function appendRecepie(data) {
+    document.getElementById("cont").innerHTML = null;
+    if (data === undefined) {
+      return false;
+    }
+    data.forEach(function (el) {
+      console.log(el);
+      let P = document.createElement("p");
+      P.innerText = el.strMeal;
+      P.style.cursor = "pointer";
+      document.getElementById("cont").append(P);
+
+      P.addEventListener("click", () => {
+        let box = document.createElement("div");
+        let im = document.createElement("img");
+        let H1 = document.createElement("h3");
+        let H2 = document.createElement("h3");
+        let H3 = document.createElement("h3");
+        im.src = el.strMealThumb;
+        H1.innerText = el.strMeal;
+        H2.innerText = el.strIngredient1;
+        H3.innerText = el.strInstructions;
+        box.append(im, H1, H2, H3);
+        document.getElementById("show").append(box);
+
+        document.getElementById("cont").innerHTML = null;
+      });
+    });
+  }
+</script>
